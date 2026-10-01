@@ -1,9 +1,9 @@
 # ── Étape 1 : installation des dépendances ──
 FROM node:22-bookworm-slim AS deps
 WORKDIR /app
-# .npmrc (ignore-scripts) : better-sqlite3 embarque ses binaires précompilés, aucune compilation n'est nécessaire.
-COPY package.json package-lock.json .npmrc ./
-RUN npm ci --omit=dev
+COPY package.json package-lock.json ./
+# --ignore-scripts : better-sqlite3 embarque ses binaires précompilés, aucune compilation n'est nécessaire.
+RUN npm ci --omit=dev --ignore-scripts
 
 # ── Étape 2 : image finale ──
 FROM node:22-bookworm-slim
