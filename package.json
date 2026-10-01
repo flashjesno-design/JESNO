@@ -1,0 +1,39 @@
+{
+  "name": "achatflow-fae",
+  "version": "1.0.0",
+  "description": "Digitalisation de la Fiche d'Analyse d'Expression de besoin (FAE) - multi-clients, workflow, dashboards, exports",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "seed": "node scripts/seed-demo.js",
+    "test": "node tests/smoke.test.js",
+    "backup": "node scripts/backup.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fontsource-variable/hanken-grotesk": "^5.3.0",
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^13.0.3",
+    "chart.js": "^4.5.1",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^18.0.1",
+    "exceljs": "^4.4.0",
+    "express": "^4.22.3",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.4.0",
+    "nodemailer": "^10.0.10",
+    "pdfkit": "^0.20.2"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "overrides": {
+    "uuid": "^11.1.1"
+  }
+}

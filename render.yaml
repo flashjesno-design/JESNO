@@ -1,0 +1,46 @@
+# Blueprint Render : crée le service web + un disque persistant pour la base SQLite.
+# Le disque persistant exige une formule payante (les services gratuits perdent leurs fichiers à chaque redémarrage).
+services:
+  - type: web
+    name: achatflow
+    runtime: docker
+    plan: starter
+    healthCheckPath: /healthz
+    autoDeploy: true
+    disk:
+      name: achatflow-data
+      mountPath: /data
+      sizeGB: 5
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /data
+      - key: TRUST_PROXY
+        value: "1"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: LICENSE_SECRET
+        generateValue: true
+      - key: BASE_URL
+        sync: false
+      - key: SUPERADMIN_EMAIL
+        sync: false
+      - key: SUPERADMIN_PASSWORD
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: SMTP_FROM
+        sync: false
+      - key: WHATSAPP_PROVIDER
+        value: none
+      - key: WHATSAPP_TOKEN
+        sync: false
+      - key: WHATSAPP_PHONE_NUMBER_ID
+        sync: false
