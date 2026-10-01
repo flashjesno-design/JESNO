@@ -1,0 +1,5 @@
+# Remplacez par votre nom de domaine
+fae.votre-domaine.com {
+	encode gzip
+	reverse_proxy app:3000
+}

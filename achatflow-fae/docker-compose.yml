@@ -1,0 +1,27 @@
+# Option « serveur à soi » (VPS) : l'application + Caddy, qui obtient et renouvelle le certificat HTTPS tout seul.
+# Prérequis : un nom de domaine dont l'enregistrement DNS « A » pointe vers l'adresse IP du serveur.
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATA_DIR: /data
+    volumes:
+      - achatflow-data:/data
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - app
+volumes:
+  achatflow-data:
+  caddy-data:
+  caddy-config:
