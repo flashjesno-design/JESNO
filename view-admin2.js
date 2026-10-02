@@ -114,7 +114,7 @@
         h('div.row', h('button.btn.sm', { onclick: async () => { try { await api.post('/admin/notifications/test', { channel: 'email' }); toast('E-mail de test envoyé à votre adresse.', 'ok'); } catch (e) { fail(e); } } }, icon('mail'), 'Tester l\'e-mail'), h('button.btn.sm', { onclick: async () => { try { await api.post('/admin/notifications/test', { channel: 'whatsapp' }); toast('Message WhatsApp de test mis en file.', 'ok'); } catch (e) { fail(e); } } }, icon('chat'), 'Tester WhatsApp')))),
       (!s.channels.smtp || !s.channels.whatsapp) ? h('div.notice.warn.mb', icon('alert'), h('div.stack.s',
         h('b', 'Pourquoi les messages ne partent pas'),
-        !s.channels.smtp ? h('div', 'E-mail : la variable ' + s.channels.email.missing + ' manque chez l\'hébergeur. Sur l\'offre gratuite de Render, les ports SMTP sont bloqués : utilisez Brevo (EMAIL_PROVIDER=brevo, BREVO_API_KEY, EMAIL_FROM) qui passe par HTTPS.') : null,
+        !s.channels.smtp ? h('div', 'E-mail : la variable ' + s.channels.email.missing + ' manque chez l\'hébergeur. Sur l\'offre gratuite de Render, les ports SMTP sont bloqués : utilisez Brevo (EMAIL_PROVIDER=brevo, BREVO_API_KEY, EMAIL_FROM) ou Mailjet (EMAIL_PROVIDER=mailjet, MAILJET_API_KEY, MAILJET_SECRET_KEY, EMAIL_FROM), qui passent par HTTPS.') : null,
         !s.channels.whatsapp ? h('div', 'WhatsApp : la variable ' + s.channels.wa.missing + ' manque. Il faut un compte Meta Business avec un numéro et un modèle de message approuvés (ou un compte Twilio).') : null,
         h('div.help', 'En attendant, les alertes restent visibles dans la cloche de l\'application et le journal ci-dessous indique « Non configuré ».'))) : null,
       h('div.grid.g2', { style: { alignItems: 'start' } },
