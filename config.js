@@ -40,7 +40,9 @@ module.exports = {
   },
   // E-mail par API HTTPS (fonctionne même quand les ports SMTP sont bloqués, ex. offre gratuite Render)
   EMAIL: {
-    provider: (env.EMAIL_PROVIDER || (env.BREVO_API_KEY ? 'brevo' : env.RESEND_API_KEY ? 'resend' : (env.SMTP_HOST ? 'smtp' : 'none'))).toLowerCase(), // brevo | resend | smtp | none
+    provider: (env.EMAIL_PROVIDER || (env.BREVO_API_KEY ? 'brevo' : env.MAILJET_API_KEY ? 'mailjet' : env.RESEND_API_KEY ? 'resend' : (env.SMTP_HOST ? 'smtp' : 'none'))).toLowerCase(), // brevo | mailjet | resend | smtp | none
+    mailjetKey: env.MAILJET_API_KEY || '',
+    mailjetSecret: env.MAILJET_SECRET_KEY || '',
     brevoKey: env.BREVO_API_KEY || '',
     resendKey: env.RESEND_API_KEY || '',
     from: env.EMAIL_FROM || env.SMTP_FROM || '',

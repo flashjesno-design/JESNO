@@ -102,6 +102,7 @@ function parseFrom(raw) {
 function emailStatus() {
   const e = config.EMAIL;
   if (e.provider === 'brevo') return { ok: !!(e.brevoKey && e.from), provider: 'brevo', missing: !e.brevoKey ? 'BREVO_API_KEY' : (!e.from ? 'EMAIL_FROM' : null) };
+  if (e.provider === 'mailjet') return { ok: !!(e.mailjetKey && e.mailjetSecret && e.from), provider: 'mailjet', missing: !e.mailjetKey ? 'MAILJET_API_KEY' : (!e.mailjetSecret ? 'MAILJET_SECRET_KEY' : (!e.from ? 'EMAIL_FROM' : null)) };
   if (e.provider === 'resend') return { ok: !!(e.resendKey && e.from), provider: 'resend', missing: !e.resendKey ? 'RESEND_API_KEY' : (!e.from ? 'EMAIL_FROM' : null) };
   if (e.provider === 'smtp') return { ok: !!config.SMTP.host, provider: 'smtp', missing: !config.SMTP.host ? 'SMTP_HOST' : null };
   return { ok: false, provider: 'none', missing: 'EMAIL_PROVIDER' };
@@ -116,6 +117,13 @@ async function sendEmail(n) {
   if (e.provider === 'brevo') {
     await postJson('https://api.brevo.com/v3/smtp/email', { sender: { name: from.name, email: from.email }, to: [{ email: n.recipient }], subject: n.subject, htmlContent: html, textContent: text },
       { 'api-key': e.brevoKey, accept: 'application/json' });
+    return { status: 'sent' };
+  }
+  if (e.provider === 'mailjet') {
+    const txt = await postJson('https://api.mailjet.com/v3.1/send', { Messages: [{ From: { Email: from.email, Name: from.name }, To: [{ Email: n.recipient }], Subject: n.subject, TextPart: text, HTMLPart: html }] },
+      { Authorization: 'Basic ' + Buffer.from(`${e.mailjetKey}:${e.mailjetSecret}`).toString('base64') });
+    const r = JSON.parse(txt || '{}'); const m = (r.Messages || [])[0] || {};
+    if (m.Status && m.Status !== 'success') throw new Error('Mailjet : ' + JSON.stringify(m.Errors || m).slice(0, 300));
     return { status: 'sent' };
   }
   if (e.provider === 'resend') {
