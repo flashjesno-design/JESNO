@@ -1,1 +1,6 @@
-ignore-scripts=true
+node_modules
+data
+.env
+.git
+tests
+*.log
