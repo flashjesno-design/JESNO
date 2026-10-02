@@ -12,7 +12,7 @@ npm run seed      # crée un client de démonstration (72 FAE fictives)
 npm start         # ouvre http://localhost:3000
 ```
 
-Compte administrateur de démonstration : identifiant `J-Todolist`, mot de passe `1234`. Autres comptes (mot de passe `Demo2026!`) :
+Compte administrateur de démonstration : identifiant `admin`, mot de passe `admin`. Autres comptes (mot de passe `Demo2026!`) :
 
 | Rôle | Identifiant |
 |---|---|
